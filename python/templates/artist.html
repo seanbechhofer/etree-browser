@@ -1,0 +1,41 @@
+{% extends "main.html" %}
+
+{%block content %}
+<div class="row">
+  <div class="col-md-10 col-md-offset-1">
+    <h1>{{name}}</h1>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+	<h2>Mappings</h2>
+      </div>
+      <div class="panel-body">
+	<table class="table table-striped table-condensed">
+	  <tr>
+	    <td><strong>Etree:</strong></td>
+	    <td><a href="{{id}}"><button class="btn btn-primary">{{id}}</button></a></td>
+	  </tr>
+	  {% for mapping in mappings %}
+	  <tr>
+	    <td><strong>{{mapping.collection}}</strong></td>
+	    <td><a href="{{mapping.url}}"><button class="btn btn-primary">{{mapping.url}}</button></a></td>
+	  </tr>
+	  {% endfor %}
+	</table>
+      </div>
+    </div>
+    <div class="panel panel-default">
+      
+      <div class="panel-heading">
+	<h2>Performances</h2>
+      </div>
+      <div class="panel-body">
+	<ol>
+	  {% for perf in performances %}
+	  <li><a href="/performance/{{perf.url|encode}}">{{perf.label}}</a>, <em>{{perf.date}}</em></li>
+	  {% endfor %}
+	</ol>
+      </div>
+    </div>
+  </div>
+</div>  
+{%endblock%}

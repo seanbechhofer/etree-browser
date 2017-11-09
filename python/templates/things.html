@@ -1,0 +1,23 @@
+{% extends "main.html" %}
+<!-- Generic List -->
+{%block content %}
+<div class="row">
+  <div class="col-md-12">
+    <h1>{{thing_type}}</h1>
+    {% for slice in things|slice(slices) %}
+    {% set colwidth = (12/slices)|int %}
+    <div class="col-md-{{colwidth}}">
+    <table class="table table-striped table-condensed">
+      <tbody>
+	{% for thing in slice %}
+	<tr>
+	  <td><a href="{{prefix}}{{thing.url}}">{{thing.label}}</a></td>
+	</tr>
+	{% endfor %}
+      </tbody>
+    </table>
+    </div>
+    {% endfor %}
+  </div>
+</div>  
+{%endblock%}

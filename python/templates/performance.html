@@ -1,0 +1,55 @@
+
+{% extends "main.html" %}
+
+{% block content %}
+<div class="row">
+  <div class="col-md-12">
+    <h1>{{performance}}</h1>
+    <p><a href="{{performance_id}}">{{performance}}</a></p>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-6">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+	<h2 class="panel-title">Metadata</h2>
+      </div>
+      <div class="panel-body">
+	<dl>
+	  <dt>artist</dt>
+	  <dd><a href="/artist/{{artist_id}}">{{artist_name}}</a></dd>
+	  <dt>date</dt>
+	  <dd>{{date}}</dd>
+	  <dt>uploader</dt>
+	  <dd>{{uploader}}</dd>
+	  <dt>etree</dt>
+	  <dd>{{etree_id}}</dd>
+	  <dt>lineage</dt>
+	  <dd>{{lineage}}</dd>
+	  <dt>location</dt>
+	  <dd><a href="/geo/{{geo}}">{{location}}</a></dd>
+	  <dt>country</dt>
+	  <dd><a href="/country/{{country}}">{{country}}</a></dd>
+	  <dt>notes</dt>
+	  <dd>{{notes}}</dd>
+	</dl>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+	<h2 class="panel-title">Tracks</h2>
+      </div>
+      <div class="panel-body">
+	<ol>
+	  {% for track in tracks %}
+	  <li><a href="/track/{{track.track}}">{{track.trackName}}</a></li>
+	  {% endfor %}
+	</ol>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock%}
+  

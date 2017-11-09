@@ -1,0 +1,72 @@
+/* Customising Bootstrap to use UoM colour scheme */
+
+/* 
+purple: 660099
+        440066
+        220033
+        aa00ff
+yellow: ffcc33 
+        ffd966
+        ffe699
+*/
+
+/* Bootstrap blue: #428bca */
+/*           light blue: #5bc0de */
+
+.navbar-inverse {
+    background-color: #428bca;
+}
+
+.navbar-inverse .navbar-nav .active a { 
+     background-color: #5bc0de;
+} 
+
+.navbar-inverse .navbar-brand, .navbar-inverse .navbar-nav li a {
+    color: #ffcc33;
+    color: #ffffff;
+    font-size: 120%;
+}
+
+.btn-basic {
+    background: #428bca;
+    color: white;
+}
+
+.jumbotron h1, .jumbotron h2, .jumbotron h3 {
+    color: #428bca;
+}
+h1, h2, h3, h4 {
+    color: #428bca;
+}
+a {
+    color: #428bca;    
+}
+
+.panel-info, .panel-info .panel-heading {
+    border-color: #428bca;
+
+}
+
+.panel-info .panel-heading {
+    color: #428bca;
+    background-color: #ffe699;
+}
+
+.well {
+    background-color: #ffe699;
+    border-color: #428bca;
+}
+
+code {
+    color: #428bca;
+}
+
+.label-as-badge {
+    border-radius: 1em;
+}
+
+dd {
+  margin-left: 10px;
+}
+
+

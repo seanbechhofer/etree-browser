@@ -1,0 +1,33 @@
+{% extends "main.html" %}
+
+{%block content %}
+  <div class="jumbotron text-center">
+    <a href="/"><img src="/static/images/band.png", width="400"/></a>
+  </div>
+
+<div class="col-md-12">
+  <div class="row">
+    <h1>About</h1>
+    <p>This demo illustrates query over our Linked Data conversion of the Internet Archive's Live Music Archive (LMA) metadata. The LMA contains some 100,000 live recorded performances, recorded with the consent of the artists. Metadata describing the event is included, largely as free text.</p>
+
+    <h1>Conversion</h1>
+    <p>Metadata conversion was done by downloading the XML metadata descriptions, converting this into an RDF representation, then using some simple techniques to try and align:</p>
+    <ul>
+      <li>Artists with Artists in MusicBrainz;</li>
+      <li>Geographical locations with locations in GeoNames (a standardised gazeteer);</li>
+      <li>Venues with venues in last.fm</li>
+    </ul>
+    <p>This then allows us to query the collection using information associated with those external data sources, for example using MusicBrainz tags to find artists. The metadata is quite dirty, though, and further cleaning needs to be done. We also plan to extract further information, for example about the lineage of the recordings, which is again encoded in free text.</p>
+
+    <p>The hope is that this additional metadata will allow us to extract subcollections that can be used for MIR tasks.</p>
+
+    <p>Interesting things about the data set are:</p>
+
+    <ul>
+      <li>Access to audio files.</li>
+      <li>Multiple performances by artists.</li>
+      <li>The presence of cover versions, which often appear in live sets.</li>
+    </ul>
+  </div>
+</div>
+{%endblock%}
