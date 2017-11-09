@@ -13,12 +13,18 @@ $ deactivate
 
 This will set up a virtual environment and install the dependencies.
 
+## Run
+
 The application can then be run using:
 
 ```bash
 $ . env/bin/activate
 $ python3 python/server.py
 ```
+
+Scripts `install.sh` and `server.sh` can also be used. 
+
+## Usage
 
 Usage information:
 
