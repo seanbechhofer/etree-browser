@@ -2,40 +2,31 @@
 
 {%block content %}
 <div class="row">
-  <div class="col-md-10 col-md-offset-1">
-    <h1>{{name}}</h1>
+  <div class="col-md-12">
+    <h1>{{track_name}}</h1>
     <div class="panel panel-default">
       <div class="panel-heading">
-	<h2>Mappings</h2>
+	<h2>Metadata</h2>
       </div>
       <div class="panel-body">
 	<table class="table table-striped table-condensed">
 	  <tr>
-	    <td><strong>Etree:</strong></td>
-	    <td><a href="{{id}}"><button class="btn btn-primary">{{id}}</button></a></td>
+	    <td><strong>artist:</strong></td>
+	    <td><a href="/artist/{{artist}}">{{artist_name}}</a></td>
 	  </tr>
-	  {% for mapping in mappings %}
 	  <tr>
-	    <td><strong>{{mapping.collection}}</strong></td>
-	    <td><a href="{{mapping.url}}"><button class="btn btn-primary">{{mapping.url}}</button></a></td>
+	    <td><strong>performance:</strong></td>
+	    <td><a href="/performance/{{event}}">{{event_name}}</a></td>
 	  </tr>
-	  {% endfor %}
-	</table>
+	  <tr>
+	    <td><strong>track:</strong></td>
+	    <td>{{num}}</td>
+	  </tr>
+	  <tr>
+	    <td><strong>etree:</strong></td>
+	    <td><a href="{{track_id}}">{{track_id}}</a></td>
+	  </tr>
       </div>
-    </div>
-    <div class="panel panel-default">
-      
-      <div class="panel-heading">
-	<h2>Performances</h2>
-      </div>
-      <div class="panel-body">
-	<ol>
-	  {% for perf in performances %}
-	  <li><a href="/performance/{{perf.url|encode}}">{{perf.label}}</a>, <em>{{perf.date}}</em></li>
-	  {% endfor %}
-	</ol>
-      </div>
-    </div>
   </div>
 </div>  
 {%endblock%}

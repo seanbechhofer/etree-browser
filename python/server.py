@@ -470,14 +470,14 @@ SELECT DISTINCT ?url ?label ?name WHERE {{
 @app.route('/track/<track_id:whatever>')
 @view('track.html')
 def track(track_id):
-    query = etree.prefix + '''SELECT ?artist ?track_name ?artist_name ?event ?event_name ?num ?setlistfmSong ?calma WHERE {{
+    query = etree.prefix + '''SELECT ?artist ?track_name ?artist_name ?num ?event ?event_name ?num ?setlistfmSong ?calma WHERE {{
 <{track_id}> mo:performer ?artist.
 ?artist skos:prefLabel ?artist_name.
 <{track_id}> skos:prefLabel ?track_name.
 <{track_id}> etree:isSubEventOf ?event.
 <{track_id}> etree:number ?num.
 ?event skos:prefLabel ?event_name.
-OPTIONAL {
+OPTIONAL {{
 ?sim sim:subject <{track_id}>.
 ?sim sim:object ?setlistfmSong.
 ?sim sim:method etree:simpleSongSetlistFMMatch.
@@ -488,13 +488,14 @@ OPTIONAL {{
 }}'''.format(track_id=track_id)
     results = sparql.query(query=query)
     for result in results['results']['bindings']:
+        print(result)
         # Just return the first one.
         track_info = {
             'track_id': track_id,
             }
-        for k in result.keys():
+        for key in result.keys():
             track_info[key] = result[key]['value']
-            return track_info
+        return track_info
     
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='''
