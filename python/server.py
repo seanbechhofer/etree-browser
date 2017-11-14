@@ -488,13 +488,27 @@ OPTIONAL {{
 }}'''.format(track_id=track_id)
     results = sparql.query(query=query)
     for result in results['results']['bindings']:
-        print(result)
         # Just return the first one.
         track_info = {
             'track_id': track_id,
+            'audio': [],
             }
         for key in result.keys():
             track_info[key] = result[key]['value']
+
+        audio_query = etree.prefix + '''SELECT ?audio ?status WHERE {{
+<{track_id}> etree:audio ?audio.
+?audio etree:audioDerivationStatus ?status.
+}}
+ORDER BY DESC(?status)
+'''.format(track_id=track_id)
+        audio_results = sparql.query(query=audio_query)
+        for audio_result in audio_results['results']['bindings']:
+            print(audio_result)
+            track_info['audio'].append({
+                'audio': audio_result['audio']['value'],
+                'status': audio_result['status']['value'],
+                })
         return track_info
     
 if __name__ == '__main__':
