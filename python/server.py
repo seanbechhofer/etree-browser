@@ -98,43 +98,46 @@ def home():
 @app.route('/artists')
 @view('artists.html')
 def artists():
+    order = request.query.order or 'label'
+    direction = request.query.direction or 'asc'
+    print(order)
     query = etree.prefix + '''
-SELECT ?thing ?label ?mb ?mbw ?opmb ?opmbw ?oplfm ?oplfmw ?slfm ?slfmw (COUNT(?performance) AS ?performances) WHERE {
+SELECT ?thing ?label ?mb ?mbw ?opmb ?opmbw ?oplfm ?oplfmw ?slfm ?slfmw (COUNT(?performance) AS ?performances) WHERE {{
 ?thing rdf:type mo:MusicArtist.
 ?thing skos:prefLabel ?label.
 ?performance mo:performer ?thing.
 ?performance event:time ?time.
 
-OPTIONAL {
+OPTIONAL {{
 ?sim1 sim:subject ?thing.
 ?sim1 sim:object ?mb.
 ?sim1 sim:method etree:simpleMusicBrainzMatch.
 ?sim1 sim:weight ?mbw.
-}
-OPTIONAL {
+}}
+OPTIONAL {{
 ?sim2 sim:subject ?thing.
 ?sim2 sim:object ?opmb.
 ?sim2 sim:method etree:opMusicBrainzMatch.
 ?sim2 sim:weight ?opmbw.
-}
-OPTIONAL {
+}}
+OPTIONAL {{
 ?sim3 sim:subject ?thing.
 ?sim3 sim:object ?oplfm.
 ?sim3 sim:method etree:opLastFMMatch.
 ?sim3 sim:weight ?oplfmw.
-}
-
-OPTIONAL {
+}}
+OPTIONAL {{
 ?sim4 sim:subject ?thing.
 ?sim4 sim:object ?slfm.
 ?sim4 sim:method etree:mroSetListFMArtistMatch.
 ?sim4 sim:weight ?slfmw.
-}
+}}
 
-} GROUP BY ?thing ?label ?mb ?mbw ?opmb ?opmbw ?oplfm ?oplfmw ?slfm ?slfmw
-ORDER BY ?label
-'''
-    results = sparql.result_to_table(sparql.query(name='artists',
+}} GROUP BY ?thing ?label ?mb ?mbw ?opmb ?opmbw ?oplfm ?oplfmw ?slfm ?slfmw
+ORDER BY {direction}(?{order})
+'''.format(order=order, direction=direction)
+    print(query)
+    results = sparql.result_to_table(sparql.query(name='artists'+'-'+direction+'-'+order,
                              query=query))
     arts = []
     coll = {

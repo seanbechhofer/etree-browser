@@ -14,57 +14,56 @@ yellow: ffcc33
 /*           light blue: #5bc0de */
 
 
-/* Variables. Bit hacky? */
+/* Variables.*/
 
 :root {
     --black:#565656;
-    --two:#d7cec7;
-    --one:#76323f;
+    --main-background:#d7cec7;
+    --main-colour:#76323f;
     --three:#c09f80
 }
 
 .navbar-inverse {
-    background-color: var(--one);
+    background-color: var(--main-colour);
     
 }
 
 .navbar-inverse .navbar-nav .active a { 
-     background-color: #5bc0de;
+    background-color: var(--main-background);
 } 
 
 .navbar-inverse .navbar-brand, .navbar-inverse .navbar-nav li a {
-    color: #ffffff;
+    color: var(--main-background);
     font-size: 120%;
 }
 
 .btn-basic {
-    background-color: var(--one);
+    background-color: var(--main-colour);
     color: white;
 }
 
 .jumbotron h1, .jumbotron h2, .jumbotron h3 {
-    color: var(--one);
+    color: var(--main-colour);
 }
 h1, h2, h3, h4 {
-    color: var(--one);
+    color: var(--main-colour);
 }
 a {
-    color: var(--one);
+    color: var(--main-colour);
 }
 
 .panel-default .panel-heading {
-    color: var(--one);
-    background-color: var(--two);
+    color: var(--main-colour);
+    background-color: var(--main-background);
 }
 
 .well {
-    background-color: #ffe699;
-    background-color: var(--two);
-    border-color: #428bca;
+    background-color: var(--main-background);
+    border-color: var(--main-colour);
 }
 
 code {
-    color: #428bca;
+#    color: #428bca;
 }
 
 .label-as-badge {
@@ -76,7 +75,7 @@ dd {
 }
 
 .btn-primary {
-    background-color: var(--one);
+    background-color: var(--main-colour);
 }
 
 
