@@ -43,3 +43,11 @@ optional arguments:
                         http://etree.linkedmusic.org/sparql
   -d, --debug           debug
 ```
+
+## Docker
+
+There is a `Dockerfile` in the repository that can be used to build a
+Docker image that will run the browser.
+
+
+
