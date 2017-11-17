@@ -98,9 +98,12 @@ def home():
 @app.route('/artists')
 @view('artists.html')
 def artists():
-    order = request.query.order or 'label'
-    direction = request.query.direction or 'asc'
-    print(order)
+    order = "label"
+    if request.query.order == "performances":
+        order = "performances"
+    direction = "asc"
+    if request.query.direction == "desc":
+        direction = "desc"
     query = etree.prefix + '''
 SELECT ?thing ?label ?mb ?mbw ?opmb ?opmbw ?oplfm ?oplfmw ?slfm ?slfmw (COUNT(?performance) AS ?performances) WHERE {{
 ?thing rdf:type mo:MusicArtist.
@@ -136,7 +139,7 @@ OPTIONAL {{
 }} GROUP BY ?thing ?label ?mb ?mbw ?opmb ?opmbw ?oplfm ?oplfmw ?slfm ?slfmw
 ORDER BY {direction}(?{order})
 '''.format(order=order, direction=direction)
-    print(query)
+
     results = sparql.result_to_table(sparql.query(name='artists'+'-'+direction+'-'+order,
                              query=query))
     arts = []
@@ -589,6 +592,6 @@ SPARQL endpoint for the data. Defaults to
     if args.debug:
         logging.basicConfig(level=logging.DEBUG)
 
-    app.run(host='localhost', port=int(args.port))
+    app.run(host='0.0.0.0', port=int(args.port))
 
 
