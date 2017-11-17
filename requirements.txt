@@ -2,5 +2,5 @@ bottle
 jinja2
 SPARQLWrapper
 requests
-
-
+numpy
+matplotlib

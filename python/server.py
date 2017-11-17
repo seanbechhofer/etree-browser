@@ -8,6 +8,7 @@ import logging
 import formatting
 import urllib.parse
 import etree
+import graphs
 
 from bottle import jinja2_view, route, run, static_file, request, redirect, response, Response, Bottle
 
@@ -43,9 +44,11 @@ def whatever_filter(config):
 
 app.router.add_filter('whatever', whatever_filter)
 
+# Setting up template directory
 here = os.path.dirname(os.path.abspath(__file__))
 templates = jinja2.Environment(loader=jinja2.FileSystemLoader(here + '/templates'))
 
+# Filter for use in jinja templates
 filter_dict = {}
 def filter(func):
 	"""Decorator to add the function to filter_dict"""
@@ -59,6 +62,7 @@ def encode(s):
 view = functools.partial(jinja2_view, template_lookup=[here + '/templates'],
                              template_settings={'filters': filter_dict})
 
+# Static pages, css, js etc.
 @app.route('/css/<filename>')
 def static_css(filename):
     return static_file(filename, root=here + '/../web/css')
@@ -84,6 +88,7 @@ def static_image(filename):
 def static_index():
     return static_file("index.html", root=here + '/../web/static')
 
+# ========== Routes ===============
 @app.route('/')
 @view('home.html')
 def home():
@@ -346,7 +351,7 @@ OPTIONAL {{
 '''.format(performance_id=performance_id)
     perf = sparql.query(query=query)
     for result in perf['results']['bindings']:
-        # We assume there's only one, so just return out of here.
+        # We assume there's only one, so we'll return from this loop
         performance_info = {
             'performance_id': performance_id,
         }
@@ -510,7 +515,58 @@ ORDER BY DESC(?status)
                 'status': audio_result['status']['value'],
                 })
         return track_info
-    
+
+# Bar chart showing performances per year
+@app.route('/graph/year')
+def graph_year():
+    query = etree.prefix + '''
+SELECT ?year (COUNT (?perf) AS ?performances) 
+WHERE {{
+  SELECT DISTINCT ?perf ?year
+  WHERE {{ 
+    ?perf rdf:type etree:Concert. 
+    ?perf etree:date ?date. 
+    FILTER regex(?date, '....-..-..')
+    FILTER (!(regex(?date, '0000')))
+    BIND(SUBSTR(?date,1,4) AS ?year)
+  }} 
+}} GROUP BY ?year 
+ORDER BY ?year
+'''
+    results = sparql.query(query=query)
+    data = {}
+    for result in results['results']['bindings']:
+        data[result['year']['value']] = int(result['performances']['value'])
+    bar = graphs.bar(data=data, title="")
+    response.content_type='image/png'
+    return bar.getvalue()
+
+# Bar chart showing performances per year
+@app.route('/graph/year/<artist:whatever>')
+def graph_year_artist(artist):
+    query = etree.prefix + '''
+SELECT ?year (COUNT (?perf) AS ?performances) 
+WHERE {{
+  SELECT DISTINCT ?perf ?year
+  WHERE {{ 
+    ?perf rdf:type etree:Concert. 
+    ?perf mo:performer <{artist}>.
+    ?perf etree:date ?date. 
+    FILTER regex(?date, '....-..-..')
+    FILTER (!(regex(?date, '0000')))
+    BIND(SUBSTR(?date,1,4) AS ?year)
+  }} 
+}} GROUP BY ?year 
+ORDER BY ?year
+'''.format(artist=artist)
+    results = sparql.query(query=query)
+    data = {}
+    for result in results['results']['bindings']:
+        data[result['year']['value']] = int(result['performances']['value'])
+    bar = graphs.bar(data=data, title="")
+    response.content_type='image/png'
+    return bar.getvalue()
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='''
 Browser for the etree linked data/RDF repository. This web application provides a human readable

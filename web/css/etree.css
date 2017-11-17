@@ -13,8 +13,19 @@ yellow: ffcc33
 /* Bootstrap blue: #428bca */
 /*           light blue: #5bc0de */
 
+
+/* Variables. Bit hacky? */
+
+:root {
+    --black:#565656;
+    --two:#d7cec7;
+    --one:#76323f;
+    --three:#c09f80
+}
+
 .navbar-inverse {
-    background-color: #428bca;
+    background-color: var(--one);
+    
 }
 
 .navbar-inverse .navbar-nav .active a { 
@@ -22,38 +33,33 @@ yellow: ffcc33
 } 
 
 .navbar-inverse .navbar-brand, .navbar-inverse .navbar-nav li a {
-    color: #ffcc33;
     color: #ffffff;
     font-size: 120%;
 }
 
 .btn-basic {
-    background: #428bca;
+    background-color: var(--one);
     color: white;
 }
 
 .jumbotron h1, .jumbotron h2, .jumbotron h3 {
-    color: #428bca;
+    color: var(--one);
 }
 h1, h2, h3, h4 {
-    color: #428bca;
+    color: var(--one);
 }
 a {
-    color: #428bca;    
+    color: var(--one);
 }
 
-.panel-info, .panel-info .panel-heading {
-    border-color: #428bca;
-
-}
-
-.panel-info .panel-heading {
-    color: #428bca;
-    background-color: #ffe699;
+.panel-default .panel-heading {
+    color: var(--one);
+    background-color: var(--two);
 }
 
 .well {
     background-color: #ffe699;
+    background-color: var(--two);
     border-color: #428bca;
 }
 
@@ -67,6 +73,10 @@ code {
 
 dd {
   margin-left: 10px;
+}
+
+.btn-primary {
+    background-color: var(--one);
 }
 
 

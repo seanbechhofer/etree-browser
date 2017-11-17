@@ -4,7 +4,7 @@
 
 The easiest way to install and run the application is via a virtual environment
 
-```bash
+```
 $ python3 -venv env
 $ . env/bin/activate
 $ pip3 install -r requirements.txt
@@ -17,7 +17,7 @@ This will set up a virtual environment and install the dependencies.
 
 The application can then be run using:
 
-```bash
+```
 $ . env/bin/activate
 $ python3 python/server.py
 ```
@@ -28,7 +28,7 @@ Scripts `install.sh` and `server.sh` can also be used.
 
 Usage information:
 
-```bash
+```
 usage: server.py [-h] [-p PORT] [-e ENDPOINT] [-d]
 
 Browser for the etree linked data/RDF repository. This web application
@@ -41,5 +41,5 @@ optional arguments:
   -e ENDPOINT, --endpoint ENDPOINT
                         SPARQL endpoint for the data. Defaults to
                         http://etree.linkedmusic.org/sparql
-						-d, --debug           debug
+  -d, --debug           debug
 ```
