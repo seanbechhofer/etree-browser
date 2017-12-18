@@ -367,22 +367,32 @@ OPTIONAL {{
 
         # Find track list.
         query = etree.prefix + '''
-SELECT DISTINCT ?track ?trackName ?trackNumber  
+SELECT DISTINCT ?track ?trackName ?trackNumber ?audio 
 {{
 <{performance_id}> event:hasSubEvent ?track.
 ?track skos:prefLabel ?trackName.
 ?track etree:number ?trackNumber.
+OPTIONAL {{
+?track etree:audio ?audio.
+?audio etree:audioFormat ?format.
+FILTER regex(?format, "mp3", "i") 
+}}
 }} ORDER BY ?trackNumber
 '''.format(performance_id=performance_id)
         print(query)
         tracks = sparql.query(query=query)
         performance_info['tracks'] = []
         for track in tracks['results']['bindings']:
-            performance_info['tracks'].append({
+            new_info = {
                 'track': track['track']['value'],
                 'trackName': track['trackName']['value'],
                 'trackNumber': track['trackNumber']['value'],
-                })
+                }
+            if 'audio' in track:
+                new_info['audio'] = track['audio']['value']
+
+            performance_info['tracks'].append(new_info)
+
         return performance_info
 
 @app.route('/country/<country_code:whatever>')

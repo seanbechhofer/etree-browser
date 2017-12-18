@@ -44,7 +44,7 @@
       <div class="panel-body">
 	<ol>
 	  {% for track in tracks %}
-	  <li><a href="/track/{{track.track}}">{{track.trackName}}</a></li>
+	  <li><a href="/track/{{track.track}}">{{track.trackName}}</a>{% if track.audio %}<br/><audio controls><source title="{{track.trackName}}" src="{{track.audio}}" type="audio/mpeg">Not supported</audio>{% endif %}</li>
 	  {% endfor %}
 	</ol>
       </div>
