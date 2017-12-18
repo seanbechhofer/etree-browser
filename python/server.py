@@ -592,6 +592,7 @@ SPARQL endpoint for the data. Defaults to
     if args.debug:
         logging.basicConfig(level=logging.DEBUG)
 
+    # Running with host='0.0.0.0' allows access from outside. Possibly insecure!
     app.run(host='0.0.0.0', port=int(args.port))
 
 
